@@ -20,11 +20,11 @@ export class CreateTodoDto extends PartialType(TodoDto) {
   @IsString()
   description: string;
 
-  @ApiProperty({
-    example: STATUS.Todo,
-    required: false,
-  })
-  @IsOptional()
-  @IsEnum(STATUS)
-  status: STATUS;
+  // @ApiProperty({
+  //   example: STATUS.Todo,
+  //   required: false,
+  // })
+  // @IsOptional()
+  // @IsEnum(STATUS)
+  // status: STATUS;
 }

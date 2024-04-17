@@ -31,6 +31,39 @@ services:
   #     - 8080:8080
   #   depends_on:
   #     - db
+  #   networks:
+  #     - trello-net
+
+  auth:
+    container_name: auth
+    build:
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+      context: .
+    command: npm run start:dev auth
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '${PORT_AUTH}:3000'
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/auth
+          target: /usr/src/app/apps/auth
+          ignore:
+            - node_modules/
+        - action: sync
+          path: ./libs
+          target: /usr/src/app/libs
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    depends_on:
+      - db
+    networks:
+      - trello-net
 
   todo:
     container_name: todo

@@ -6,6 +6,8 @@ import {
   Param,
   Patch,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
@@ -20,6 +22,7 @@ import {
 import { FindTodoDto } from './dto/find-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { FilterPipe } from '@app/common/pipes/filter.pipe';
 
 @ApiTags('todo')
 @Controller('todo')
@@ -32,7 +35,9 @@ export class TodoController {
     type: CreateTodoDto,
     description: 'Json structure for todo object',
   })
-  async create(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
+  async create(
+    @Body(ValidationPipe) createTodoDto: CreateTodoDto,
+  ): Promise<Todo> {
     return this.todoService.create(createTodoDto);
   }
 
@@ -54,11 +59,14 @@ export class TodoController {
     type: FindTodoDto,
     description: 'Json structure for todo object',
   })
-  async findMany(@Body() findTodoDto: FindTodoDto): Promise<Todo[]> {
+  @UsePipes(new FilterPipe(['title', 'date', 'status', 'description']))
+  async findMany(
+    @Body(ValidationPipe) findTodoDto: FindTodoDto,
+  ): Promise<Todo[]> {
     return this.todoService.findMany(findTodoDto);
   }
 
-  @Patch('id')
+  @Patch(':id')
   @ApiOperation({ summary: 'patch todo' })
   @ApiParam({
     name: 'id',
@@ -70,6 +78,7 @@ export class TodoController {
     type: UpdateTodoDto,
     description: 'Json structure for todo object',
   })
+  @UsePipes(new FilterPipe(['title', 'status', 'description']))
   update(
     @Param('id') id: string,
     @Body() updateTodoDto: UpdateTodoDto,

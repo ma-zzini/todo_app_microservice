@@ -15,21 +15,19 @@ export class TodoService {
     private readonly enityManager: EntityManager,
   ) {}
 
-  // TODO: craete a todoFacotryEntity??
-  create(createTodoDto: CreateTodoDto) {
+  async create(createTodoDto: CreateTodoDto) {
     const new_todo = new Todo({
       date: new Date(),
-      status: STATUS.Todo,
-      ...createTodoDto,
+      status: createTodoDto.status,
+      title: createTodoDto.title,
+      description: createTodoDto.description,
     });
     return this.enityManager.save<Todo>(new_todo);
   }
 
   async findOne(id: string) {
-    return this.todoRepository.findOne({
-      where: {
-        id: id,
-      },
+    return this.todoRepository.findOneBy({
+      id: id,
     });
   }
 
@@ -45,10 +43,5 @@ export class TodoService {
 
   async delete(id: string) {
     return await this.todoRepository.delete(id);
-    // if (res.affected >= 1) {
-    //   return true;
-    // }
-
-    // return false;
   }
 }

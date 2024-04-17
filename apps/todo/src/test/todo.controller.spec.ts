@@ -75,6 +75,7 @@ describe('TodoController', () => {
       test('then it should call todoService', () => {
         expect(todoService.findMany).toHaveBeenCalledWith(findTodo);
       });
+
       test('then it should return todo', () => {
         expect(todos).toEqual([todoStub()]);
       });

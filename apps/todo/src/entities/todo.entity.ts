@@ -6,10 +6,10 @@ export class Todo extends AbstractEntity<Todo> {
   @Column()
   title: string;
 
-  @Column()
+  @Column({ default: '' })
   description: string;
 
-  @Column({ type: 'enum', enum: STATUS })
+  @Column({ type: 'enum', enum: STATUS, default: STATUS.Todo })
   status: STATUS;
 
   @Column()
