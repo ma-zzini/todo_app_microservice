@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { TodoModule } from './todo.module';
-import { AuthGuard, LoggingInterceptor } from '@app/common';
+import { LoggingInterceptor } from '@app/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
 
@@ -11,13 +11,13 @@ async function bootstrap() {
     .setDescription('Todo API')
     .setVersion('1.0')
     .addTag('todo')
+    .addBearerAuth()
     .build();
 
   const doc = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, doc);
 
   app.useGlobalInterceptors(new LoggingInterceptor());
-  // app.useGlobalGuards();
   await app.listen(3000);
 }
 bootstrap();

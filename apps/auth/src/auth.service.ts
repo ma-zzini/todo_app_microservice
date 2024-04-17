@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './users/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from './users/users.service';
@@ -25,6 +25,7 @@ export class AuthService {
       email,
       password: hashPass,
     });
+
     return {
       accessToken: await this.jwtService.signAsync({
         email: newUser.email,
@@ -39,11 +40,11 @@ export class AuthService {
     // this.logger.debug(user);
 
     if (user === null) {
-      throw new Error('User not found');
+      throw new UnauthorizedException('User not found');
     }
 
     if (!(await bcrypt.compare(password, user.password))) {
-      throw new Error('password incorrect');
+      throw new UnauthorizedException('password incorrect');
     }
 
     return {

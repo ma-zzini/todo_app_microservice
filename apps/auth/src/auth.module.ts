@@ -12,7 +12,7 @@ import { User } from './users/entitis/user.entity';
     UsersModule,
     JwtModule.register({
       global: true,
-      secret: process.env.JWT_SEACRET,
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '120s' },
     }),
     TypeOrmModule.forFeature([User]),

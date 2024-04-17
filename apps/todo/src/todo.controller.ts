@@ -18,6 +18,7 @@ import {
   ApiParam,
   ApiResponse,
   ApiTags,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { FindTodoDto } from './dto/find-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -25,6 +26,7 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 import { FilterPipe } from '@app/common/pipes/filter.pipe';
 
 @ApiTags('todo')
+@ApiTags('Protected')
 @Controller('todo')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
@@ -35,6 +37,7 @@ export class TodoController {
     type: CreateTodoDto,
     description: 'Json structure for todo object',
   })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
   async create(
     @Body(ValidationPipe) createTodoDto: CreateTodoDto,
   ): Promise<Todo> {
