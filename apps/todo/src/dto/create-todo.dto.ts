@@ -1,8 +1,9 @@
 import { STATUS } from '@app/common';
 import { PartialType } from '@nestjs/mapped-types';
 import { TodoDto } from './todo.dto';
-import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { UUID } from 'crypto';
 
 export class CreateTodoDto extends PartialType(TodoDto) {
   @ApiProperty({
@@ -19,12 +20,4 @@ export class CreateTodoDto extends PartialType(TodoDto) {
   @IsOptional()
   @IsString()
   description: string;
-
-  // @ApiProperty({
-  //   example: STATUS.Todo,
-  //   required: false,
-  // })
-  // @IsOptional()
-  // @IsEnum(STATUS)
-  // status: STATUS;
 }

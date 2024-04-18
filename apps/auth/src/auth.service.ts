@@ -28,8 +28,7 @@ export class AuthService {
 
     return {
       accessToken: await this.jwtService.signAsync({
-        email: newUser.email,
-        password: newUser.password,
+        id: newUser.id,
       }),
     };
   }
@@ -49,8 +48,7 @@ export class AuthService {
 
     return {
       accessToken: await this.jwtService.signAsync({
-        email: user.email,
-        password: user.password,
+        id: user.id,
       }),
     };
   }

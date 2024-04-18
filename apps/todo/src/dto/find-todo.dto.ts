@@ -1,8 +1,9 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { STATUS } from '@app/common';
 import { TodoDto } from './todo.dto';
-import { IsDate, IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { UUID } from 'crypto';
 
 export class FindTodoDto extends PartialType(TodoDto) {
   @ApiProperty({

@@ -1,5 +1,5 @@
-import { AbstractEntity, STATUS } from '@app/common';
-import { Column, Entity } from 'typeorm';
+import { AbstractEntity, STATUS, User } from '@app/common';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity('todos')
 export class Todo extends AbstractEntity<Todo> {
@@ -14,4 +14,7 @@ export class Todo extends AbstractEntity<Todo> {
 
   @Column()
   date: Date;
+
+  @Column({ nullable: false })
+  userid: string;
 }

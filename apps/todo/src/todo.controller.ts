@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -40,8 +41,10 @@ export class TodoController {
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   async create(
     @Body(ValidationPipe) createTodoDto: CreateTodoDto,
+    @Req() request: Request,
   ): Promise<Todo> {
-    return this.todoService.create(createTodoDto);
+    const userid = request['userid'];
+    return this.todoService.create(userid, createTodoDto);
   }
 
   @Get(':id')
@@ -52,8 +55,12 @@ export class TodoController {
     description: 'ID univoco',
     example: 'a2c62580-32e1-431a-8cc9-7bda679ad77e',
   })
-  async findOne(@Param('id') id: string): Promise<Todo> {
-    return this.todoService.findOne(id);
+  async findOne(
+    @Req() request: Request,
+    @Param('id') id: string,
+  ): Promise<Todo> {
+    const userid = request['userid'];
+    return this.todoService.findOne(userid, id);
   }
 
   @Get()
@@ -64,9 +71,11 @@ export class TodoController {
   })
   @UsePipes(new FilterPipe(['title', 'date', 'status', 'description']))
   async findMany(
+    @Req() request: Request,
     @Body(ValidationPipe) findTodoDto: FindTodoDto,
   ): Promise<Todo[]> {
-    return this.todoService.findMany(findTodoDto);
+    const userid = request['userid'];
+    return this.todoService.findMany(userid, findTodoDto);
   }
 
   @Patch(':id')
@@ -81,12 +90,14 @@ export class TodoController {
     type: UpdateTodoDto,
     description: 'Json structure for todo object',
   })
-  @UsePipes(new FilterPipe(['title', 'status', 'description']))
   update(
+    @Req() request: Request,
     @Param('id') id: string,
-    @Body() updateTodoDto: UpdateTodoDto,
+    @Body(new FilterPipe(['title', 'status', 'description']))
+    updateTodoDto: UpdateTodoDto,
   ): Promise<UpdateResult> {
-    return this.todoService.update(id, updateTodoDto);
+    const userid = request['userid'];
+    return this.todoService.update(userid, id, updateTodoDto);
   }
 
   @Delete(':id')
@@ -97,7 +108,11 @@ export class TodoController {
     description: 'ID univoco',
     example: 'a2c62580-32e1-431a-8cc9-7bda679ad77e',
   })
-  delete(@Param('id') id: string): Promise<DeleteResult> {
-    return this.todoService.delete(id);
+  delete(
+    @Req() request: Request,
+    @Param('id') id: string,
+  ): Promise<DeleteResult> {
+    const userid = request['userid'];
+    return this.todoService.delete(userid, id);
   }
 }
