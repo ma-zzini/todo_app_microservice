@@ -1,4 +1,4 @@
-import { AbstractEntity, STATUS, User } from '@app/common';
+import { AbstractEntity, STATUS } from '@app/common';
 import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity('todos')

@@ -36,6 +36,17 @@
       "compilerOptions": {
         "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
+    },
+    "ermes": {
+      "type": "application",
+      "root": "apps/ermes",
+      "entryFile": "main",
+      "sourceRoot": "apps/ermes/src",
+      "compilerOptions": {
+        "assets": ["email_templete/**/*"],
+        "watchAssets": true,
+        "tsConfigPath": "apps/ermes/tsconfig.app.json"
+      }
     }
   }
 }

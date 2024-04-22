@@ -3,6 +3,7 @@ import { TodoModule } from './todo.module';
 import { LoggingInterceptor } from '@app/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(TodoModule);
@@ -18,6 +19,12 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, doc);
 
   app.useGlobalInterceptors(new LoggingInterceptor());
+  // app.connectMicroservice<MicroserviceOptions>({
+  //   transport: Transport.TCP,
+  //   options: { port: 3001 },
+  // });
+
+  // await app.startAllMicroservices();
   await app.listen(3000);
 }
 bootstrap();
