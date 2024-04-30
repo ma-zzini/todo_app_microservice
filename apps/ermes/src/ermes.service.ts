@@ -9,7 +9,7 @@ export class ErmesService {
   constructor(
     private emailService: MailerService,
     private slackService: SlackService,
-    private telegramService: TelegramService,
+    // private telegramService: TelegramService,
   ) {}
 
   send_email(email: string, id: string) {

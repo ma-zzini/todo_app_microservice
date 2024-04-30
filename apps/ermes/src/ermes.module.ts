@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ErmesController } from './ermes.controller';
 import { ErmesService } from './ermes.service';
-// import { ClientProxy, ClientsModule, Transport } from '@nestjs/microservices';
 import { MailerModule } from '@nestjs-modules/mailer';
-// import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
-// import { join } from 'path';
 import { SlackModule } from 'nestjs-slack';
 import { TelegramModule } from 'nestjs-telegram';
 
@@ -14,9 +11,9 @@ import { TelegramModule } from 'nestjs-telegram';
       type: 'webhook',
       url: process.env.SLACK_WEBHOOK,
     }),
-    TelegramModule.forRoot({
-      botKey: process.env.TELEGRAM_TOKEN,
-    }),
+    // TelegramModule.forRoot({
+    //   botKey: process.env.TELEGRAM_TOKEN,
+    // }),
     MailerModule.forRoot({
       transport: {
         // service: 'gmail',

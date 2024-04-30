@@ -6,11 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { TodoService } from './todo.service';
+import { TodoService } from './services/todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { Todo } from './entities/todo.entity';
 import {
@@ -25,6 +26,7 @@ import { FindTodoDto } from './dto/find-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { FilterPipe } from '@app/common/pipes/filter.pipe';
+import { STATUS } from '@app/common';
 
 @ApiTags('todo')
 @ApiTags('Protected')
@@ -65,14 +67,9 @@ export class TodoController {
 
   @Get()
   @ApiOperation({ summary: 'find todos' })
-  @ApiBody({
-    type: FindTodoDto,
-    description: 'Json structure for todo object',
-  })
-  @UsePipes(new FilterPipe(['title', 'date', 'status', 'description']))
   async findMany(
     @Req() request: Request,
-    @Body(ValidationPipe) findTodoDto: FindTodoDto,
+    @Query(ValidationPipe) findTodoDto: FindTodoDto,
   ): Promise<Todo[]> {
     const userid = request['userid'];
     return this.todoService.findMany(userid, findTodoDto);

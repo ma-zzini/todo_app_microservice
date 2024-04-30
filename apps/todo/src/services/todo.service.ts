@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CreateTodoDto } from './dto/create-todo.dto';
+import { CreateTodoDto } from '../dto/create-todo.dto';
 import { EntityManager, Repository } from 'typeorm';
-import { Todo } from './entities/todo.entity';
-import { FindTodoDto } from './dto/find-todo.dto';
+import { Todo } from '../entities/todo.entity';
+import { FindTodoDto } from '../dto/find-todo.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateTodoDto } from './dto/update-todo.dto';
+import { UpdateTodoDto } from '../dto/update-todo.dto';
 
 @Injectable()
 export class TodoService {
@@ -34,6 +34,7 @@ export class TodoService {
     });
   }
 
+  // TODO: separare in file differenti in serivices
   async findMany(userid: string, findTodoDto: FindTodoDto) {
     return this.todoRepository.find({
       where: {

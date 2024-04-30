@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TodoController } from '../todo.controller';
-import { TodoService } from '../todo.service';
+import { TodoService } from '../services/todo.service';
 import { CreateTodoDto } from '../dto/create-todo.dto';
 import { todoStub } from './stubs/todo.stub';
 import { Todo } from '../entities/todo.entity';
